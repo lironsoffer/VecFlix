@@ -29,4 +29,7 @@ SparseVector::SparseVector(unsigned int dim, std::vector<VectorEntry> &entries) 
 	}
 }
 
-
+void SparseVector::makeZero()
+{
+	for (size_t i=0;i<)
+}

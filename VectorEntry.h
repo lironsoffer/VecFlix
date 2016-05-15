@@ -29,7 +29,7 @@ public:
 	{
 		return _index;
 	}
-	void Operator*(double num);
+	//void Operator*(double num);
 
 
 
