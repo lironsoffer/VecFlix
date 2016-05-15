@@ -10,18 +10,19 @@
 #include <mem.h> //includes memory faction +memcpp
 #include "VectorEntry.h"
 
-namespace VectorEntry {
-
-
-VectorEntry::VectorEntry(const VectorEntry &orig)
+/* ?????
+VectorEntry::VectorEntry(const VectorEntry & orig) : _index(orig.index()) , _value(orig.value())
 {
-	//TODO: data=VectorEntry(orig.getIndex(),orig.getRate())
-}
+	_index=VectorEntry(orig.index());
+	_value(orig.value());
+} */
 
+/*VectorEntry::VectorEntry(const VectorEntry &orig)
+{
+	//TODO: data=VectorEntry(orig.index(),orig.getRate())
+}
+*/
 
 VectorEntry::~VectorEntry() {
 	// TODO Auto-generated destructor stub
 }
-
-} /* namespace VectorEntry */
-

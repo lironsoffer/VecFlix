@@ -15,10 +15,10 @@ static void testSubtract();
 
 void runVectorTests()
 {
-//    testCreateAndPrint();
-//    testGetNonZeros();
-//    testMakeZero();
-//    testMakeStandardBasis();
+    testCreateAndPrint();
+    testGetNonZeros();
+    testMakeZero();
+    testMakeStandardBasis();
 //    testSetValue();
 //    testCopyAndAssign();
 //    testAdd();
@@ -83,7 +83,7 @@ void testMakeStandardBasis()
     printVector(vector1);
     printVector(vector2);
 }
-
+/*
 void testSetValue()
 {
     std::cout << "testSetValue" << std::endl;
@@ -146,3 +146,4 @@ void testSubtract()
     printVector(vector2);
     printVector(subtract(vector1, vector2));
 }
+*/
