@@ -15,15 +15,15 @@ static void testSubtract();
 
 void runVectorTests()
 {
-    testCreateAndPrint();
-    testGetNonZeros();
-    testMakeZero();
-    testMakeStandardBasis();
-    testSetValue();
-    testCopyAndAssign();
-    testAdd();
-    testScale();
-    testSubtract();
+//    testCreateAndPrint();
+//    testGetNonZeros();
+//    testMakeZero();
+//    testMakeStandardBasis();
+//    testSetValue();
+//    testCopyAndAssign();
+//    testAdd();
+//    testScale();
+//    testSubtract();
 }
 
 void testCreateAndPrint()
