@@ -25,7 +25,7 @@ SparseVector::SparseVector(unsigned int dim, std::vector<VectorEntry> &entries) 
 {
 	for(size_t i=0;i<entries.size();i++)
 	{
-		_vector[i]=
+		_vector[i]=new VectorEntry(entries[i]);
 	}
 }
 
