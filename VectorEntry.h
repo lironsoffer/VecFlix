@@ -14,20 +14,18 @@ class VectorEntry
 {
 public:
 
-	VectorEntry(size_t index, double value): _index(index) , _value(value){} //defalut by val
-	VectorEntry(size_t index): _index(index) , _value(0){} // default by index
+	VectorEntry(unsigned int  index, double value): _index(index) , _value(value){} //defalut by val
+	VectorEntry(unsigned int  index): _index(index) , _value(0){} // default by index
 	VectorEntry(const VectorEntry & orig) : _index(orig.index()) , _value(orig.value()){}
 	virtual ~VectorEntry(){}
 	double value () const {return (_value); }
 	void setvalue (const double value) { _value=value; }
-	size_t index() const { return (_index); }
+	unsigned int  index() const { return (_index); }
 
-
-
-
+	VectorEntry operator + (const VectorEntry &a, const VectorEntry &b);
 private:
-// can be type_def- size_t -> index
-size_t _index;
+// can be type_def- unsigned int  -> index
+unsigned int _index;
 double _value; // class member obj needs to have a _
 VectorEntry();
 };
