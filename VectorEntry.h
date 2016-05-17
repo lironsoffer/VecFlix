@@ -22,7 +22,7 @@ public:
 	void setvalue (const double value) { _value=value; }
 	unsigned int  index() const { return (_index); }
 
-	VectorEntry operator + (const VectorEntry &a, const VectorEntry &b);
+	//VectorEntry operator + (const VectorEntry &a, const VectorEntry &b);
 private:
 // can be type_def- unsigned int  -> index
 unsigned int _index;

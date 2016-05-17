@@ -1,0 +1,28 @@
+/*
+//implemented outside of class:
+Complex operator+(const Complex a, const Complex b)
+{
+    Complex c(a.GetR()+b.GetR(), a.GetI()+b.GetI());
+    return c;
+}
+
+//implemented inside of class:
+Complex operator+(const Complex b)
+{
+	Complex c(this->GetR()+b.GetR, this->GetI()+b.GetI);
+	return c;
+}
+
+//implemented inside class, makes it a member function so you can access privete fields. 
+//So you can also do the following:
+Complex operator+(const Complex b)
+{
+	Complex c(r+b.GetR, i+b.GetI);
+	return c;
+}
+
+//code:
+Complex a(3,2);
+Complex b(4,5);
+Complex c = a+b; //C = (7,7)
+*/

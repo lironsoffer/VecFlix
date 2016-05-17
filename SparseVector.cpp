@@ -24,6 +24,7 @@ SparseVector subtract(const SparseVector& left, const SparseVector& right)
     return result;
 }
 */
+/*
 SparseVector SparseVector::operator+ (const SparseVector &a, const SparseVector &b)
 {
 
@@ -32,6 +33,7 @@ SparseVector SparseVector::operator= (unsigned int dim, unsigned int VectorSize,
 {
 
 }
+*/
 SparseVector::SparseVector(unsigned int dimension, std::vector<VectorEntry> &entries) : _dimension(dimension),_vectorSize(entries.size()), _vector(new VectorEntry[entries.size()])
 {
 	for(unsigned int  i=0;i<_vectorSize;i++)

@@ -9,13 +9,14 @@
 #include <stdlib.h>     /* realloc, free, exit, NULL */
 #include <mem.h> //includes memory faction +memcpp
 #include "VectorEntry.h"
-
+/*
 VectorEntry::VectorEntry operator + (const VectorEntry &a, const VectorEntry &b)
 {
 		VectorEntry c=(a.index(),(a.value()+b.value()));
 	//assuming the index in the same
 		return c;
 }
+*/
 /*
 VectorEntry::VectorEntry(const VectorEntry & orig)
 {
