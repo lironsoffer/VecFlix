@@ -14,25 +14,15 @@ class VectorEntry {
 public:
 
 	VectorEntry(): _index(0), _value(0){} // TODO: location needs to be verify ---- Problem to build an empty array
-	VectorEntry(size_t index, double value): _index(index) , _value(value){}//defalut by val
+	VectorEntry(size_t index, double value): _index(index) , _value(value){}//defalut by index
 	VectorEntry(size_t index): _index(index) , _value(0){}// default by index
-	VectorEntry(const VectorEntry &orig) : _index(orig.index()) , _value(orig.value()){} // needs to be verify
-	virtual ~VectorEntry();
-	double value () const
-	{
-		return _value;
-	}
-	void setvalue (const double value)
-	{
-		_value=value;//needs to be verify
-	}
-	size_t index() const
-	{
-		return _index;
-	}
+	VectorEntry(const VectorEntry & orig) : _index(orig.index()) , _value(orig.value()){}
+	virtual ~VectorEntry(){}
+	double value () const {return (_value); }
+	void setvalue (const double value) { _value=value; }
+	unsigned int  index() const { return (_index); }
 
 private:
-// can be type_def- size_t -> index
 size_t _index;
 double _value; // class member obj needs to have a _
 };
