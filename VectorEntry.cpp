@@ -10,11 +10,11 @@
 #include <mem.h> //includes memory faction +memcpp
 #include "VectorEntry.h"
 
-/* ?????
+/*
 VectorEntry::VectorEntry(const VectorEntry & orig) : _index(orig.index()) , _value(orig.value())
 {
-	_index=VectorEntry(orig.index());
-	_value(orig.value());
+//	_index=VectorEntry(orig.index());
+//	_value(orig.value());
 } */
 
 /*VectorEntry::VectorEntry(const VectorEntry &orig)
@@ -22,7 +22,3 @@ VectorEntry::VectorEntry(const VectorEntry & orig) : _index(orig.index()) , _val
 	//TODO: data=VectorEntry(orig.index(),orig.getRate())
 }
 */
-
-VectorEntry::~VectorEntry() {
-	// TODO Auto-generated destructor stub
-}

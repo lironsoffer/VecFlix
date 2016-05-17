@@ -19,7 +19,7 @@ public:
 	VectorEntry(const VectorEntry & orig) : _index(orig.index()) , _value(orig.value()){}
 	virtual ~VectorEntry(){}
 	double value () const {return (_value); }
-	void setvalue (const double value) { _value=value; }
+	void setValue (const double value) { _value=value; }
 	unsigned int  index() const { return (_index); }
 
 private:
