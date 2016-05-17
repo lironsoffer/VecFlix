@@ -9,6 +9,7 @@
 #include <stdlib.h>     /* realloc, free, exit, NULL */
 #include <mem.h> //includes memory faction +memcpp
 #include "VectorEntry.h"
+
 /*
 VectorEntry::VectorEntry operator + (const VectorEntry &a, const VectorEntry &b)
 {

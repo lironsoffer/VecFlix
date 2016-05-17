@@ -6,31 +6,33 @@
 
 class SparseVector {
 public:
-    SparseVector(unsigned int dim) : _dimension(dim),_vectorSize(0), _vector(0){}
-	SparseVector(unsigned int dim, std::vector<VectorEntry> &entries);
+    SparseVector(size_t dim) : _dimension(dim),_vectorSize(0), _vector(0){}
+	SparseVector(size_t dim, std::vector<VectorEntry> &entries);
 
 	SparseVector(const SparseVector & orig);
 
 	void makeZero(); //-L
-	double get(unsigned int  i) const; // -L-fixed
+	double get(size_t  i) const;
 	void getNonZeros(std::vector<VectorEntry> &vector) const;// -L
-	void makeStandardBasis(unsigned int  index); // -L
+	void makeStandardBasis(size_t  index); // -L
 	void add(const SparseVector& vector); //TODO -L
-	unsigned int dimension () const { return (_dimension);}
+	size_t dimension () const { return (_dimension);}
+	size_t vectorSize () const { return (_vectorSize);}
+	SparseVector& set(size_t  index,double invalue);
 	//TODO: more constructors: assign -B
 	//TODO: Operators -B
-	//SparseVector operator + (unsigned int dim, unsigned int VectorSize, VectorEntry *vector);
-	//SparseVector operator = (unsigned int dim, unsigned int VectorSize, VectorEntry *vector);
-	SparseVector& set(unsigned int  i,double value){return (*this);} //TODO: unsigned int set(unsigned int  i,double value); -B
+	//SparseVector operator + (size_t dim, size_t VectorSize, VectorEntry *vector);
+	//SparseVector operator = (size_t dim, size_t VectorSize, VectorEntry *vector);
+	 //TODO: size_t set(size_t  i,double value); -B
 
 
 
 
 private:
-	unsigned int _dimension; // the amount of videos
-	unsigned int _vectorSize; // the amount of rated videos
+	size_t _dimension; // the amount of videos
+	size_t _vectorSize; // the amount of rated videos
 	VectorEntry *_vector;
-
+	double getIndex(size_t indexvalue) const;
 	//SparseVector(){}
 };
 
