@@ -52,25 +52,27 @@ SparseVector::SparseVector(const SparseVector & orig)
 SparseVector& SparseVector::set(size_t  index,double inValue)
 {
 
-	if(this->get(index)!=0)
+	if(this->get(index)!=0) //if the rating isn't 0 change it
 	{
-		_vector[index].setValue(inValue);
+		_vector[(this->getIndex(index))].setValue(inValue);
 	}
-	else
+	else //  replace the old arry and make a new arry containing the new rating
 	{
 
-	}
-	/*
-	for( size_t i=0; i<_vectorSize; i++)
-	{
-		if(_vector[i].index()==index)
+		size_t newSize=_vectorSize+1;
+		SparseVector* newVec&=new SparseVector[newSize];
+		for(size_t x=0; x<newSize; x++)
 		{
-
-
-			flag=1;
+			newVec[x]=_vector[x];
+			if (x==(newSize-1))
+			{
+				newVec[x]=(index,inValue);
+				return newVec;
+			}
 		}
 	}
-	*/
+	return (_vector);
+}
 
 }
 void SparseVector::makeZero()
