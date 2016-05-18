@@ -21,7 +21,7 @@ public:
 	SparseVector& set(size_t  index,double invalue);
 	//TODO: more constructors: assign -B
 	//TODO: Operators -B
-	//SparseVector operator + (size_t dim, size_t VectorSize, VectorEntry *vector);
+	//SparseVector operator + (size_t dim, size_t VectorSize, VectorxEntry *vector);
 	//SparseVector operator = (size_t dim, size_t VectorSize, VectorEntry *vector);
 	 //TODO: size_t set(size_t  i,double value); -B
 

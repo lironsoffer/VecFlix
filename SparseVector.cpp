@@ -27,8 +27,20 @@ SparseVector subtract(const SparseVector& left, const SparseVector& right)
 /*
 SparseVector SparseVector::operator+ (const SparseVector &a, const SparseVector &b)
 {
+	SparseVector newVector(a.dimension());
+	_dimension=this->a.dimension();
+	for(size_t temp=0; temp<a._vectorSize; temp++)
+		{
+		newvector.set((a[temp].getIndex(temp),a[temp].indexValue());
+		}
+	for(size_t temp2=0; temp2<b._vectorSize; temp2++)
+		{
+		newVector.add(b);
+		}
 
 }
+*/
+/*
 SparseVector SparseVector::operator= (size_t dim, size_t VectorSize, VectorEntry *vector)
 {
 
