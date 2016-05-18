@@ -41,6 +41,39 @@ SparseVector::SparseVector(const SparseVector & orig)
 	_vector=orig._vector;
 }
 
+SparseVector& SparseVector::set(size_t index,double inValue)
+{
+
+	if((index<_vectorSize)&&(this->get(index)!=0)) //if the rating isn't 0 change it
+	{
+		_vector[(this->getIndex(index))].setValue(inValue);
+	}
+	else
+	{
+		VectorEntry *newVec;
+		if (index>_vectorSize) //  replace the old arry and make a new arry containing the new rating
+		//Make new array with new size
+		{
+			newVec=new VectorEntry[index+1];
+		}
+		// Make new array with old size+1
+		else
+		{
+			newVec=new VectorEntry[_vectorSize+1];
+		}
+
+		for(size_t j=0; j<_vectorSize; j++)
+		{
+			newVec[j]=_vector[j];
+		}
+		VectorEntry *newEntry = new VectorEntry(index,inValue);
+		newVec[_vectorSize++]=*newEntry;
+		delete[] _vector;
+		_vector=newVec;
+	}
+	return *this;
+}
+
 void SparseVector::makeZero()
 {
 	_vectorSize=0;
@@ -64,7 +97,7 @@ double SparseVector::get(size_t indexvalue) const
 	return 0;
 }
 
-double SparseVector::getIndex(size_t indexvalue) const
+size_t SparseVector::getIndex(size_t indexvalue) const
 {
 	if (indexvalue>=_dimension) //TODO: Check if should be > or >=
 	{
@@ -100,14 +133,9 @@ void SparseVector::makeStandardBasis(size_t index)
 
 void SparseVector::add(const SparseVector& vector)
 {
-	std::cout << _vectorSize << std::endl;
-	for (size_t i=0;i<_vectorSize;i++)
+	for (size_t i=0;i<_dimension;i++)
 	{
-		size_t movieIndex=_vector[i].index();
-		double tmp=vector.get(i) + vector.get(movieIndex);
-		VectorEntry newVec(_vector[i].index(),tmp);
-		std::cout << tmp << std::endl;
-		_vector[i]=newVec;
+		double tmp=this->get(i)+vector.get(i);
+		this->set(i,tmp);
 	}
-
 }

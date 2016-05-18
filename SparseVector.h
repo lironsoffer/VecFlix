@@ -21,14 +21,14 @@ public:
 	//SparseVector operator + (unsigned int dim, unsigned int VectorSize, VectorEntry *vector);
 	//SparseVector operator = (unsigned int dim, unsigned int VectorSize, VectorEntry *vector);
 
-	SparseVector& set(size_t i,double value){return *this;} //TODO: unsigned int set(size_t i,double value); -B
+	SparseVector& set(size_t i,double value); //TODO: unsigned int set(size_t i,double value); -B
 
 private:
 	unsigned int _dimension;
 	unsigned int _vectorSize;
 	VectorEntry *_vector;
 
-	double getIndex(size_t indexvalue) const;
+	size_t getIndex(size_t indexvalue) const;
 
 	//SparseVector(){}
 };
