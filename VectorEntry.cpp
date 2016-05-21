@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>//include string factions
 #include <stdlib.h>     /* realloc, free, exit, NULL */
-#include <mem.h> //includes memory faction +memcpp
+//#include <mem.h> //includes memory faction +memcpp
 #include "VectorEntry.h"
 
 /*

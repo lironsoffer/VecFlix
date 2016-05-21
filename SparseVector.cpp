@@ -28,6 +28,7 @@ SparseVector::SparseVector(unsigned int dimension,
 				_dimension(dimension),_vectorSize(entries.size()),
 				_vector(new VectorEntry[entries.size()])
 {
+    cout << "SparseVector(dimension, entries) _vector = " << (void*)_vector << endl;
 	for(size_t i=0;i<_vectorSize;i++)
 	{
 		_vector[i]=entries[i];
@@ -36,6 +37,7 @@ SparseVector::SparseVector(unsigned int dimension,
 
 SparseVector::SparseVector(const SparseVector & orig)
 {
+    cout << "SparseVector(&orig) _vector = " << (void*)_vector << endl;
 	_dimension=orig._dimension;
 	_vectorSize=orig._vectorSize;
 	_vector=orig._vector;
@@ -47,6 +49,8 @@ SparseVector& SparseVector::operator=(const SparseVector & orig)
 	{
 		return *this;
 	}
+
+    cout << "SparseVector(&orig) op= _vector=" << (void*)_vector << " new _vector= " << orig._vector << endl;
 	_dimension=orig._dimension;
 	_vectorSize=orig._vectorSize;
 	_vector=orig._vector;
@@ -89,9 +93,11 @@ SparseVector& SparseVector::set(size_t index,double inValue)
 
 void SparseVector::makeZero()
 {
+    cout << "SparseVector()::makeZero() _vector = " << (void*)_vector;
 	this->_vectorSize=0;
 	delete[] this->_vector; //TODO: Read again the chapter about delete
 	this->_vector = new VectorEntry();
+    cout << " _vector=" << (void*)_vector << endl;
 }
 
 double SparseVector::get(size_t indexvalue) const

@@ -3,13 +3,20 @@
 
 #include "VectorEntry.h"
 #include <vector>
+#include <iostream>
+using namespace std;
 
 class SparseVector {
 public:
-	SparseVector(unsigned int dimension=0) : _dimension(dimension),_vectorSize(0), _vector(new VectorEntry()){}
+	SparseVector(unsigned int dimension=0) : _dimension(dimension),_vectorSize(0), _vector(new VectorEntry()){
+        cout << "SparseVector(dimension) _vector = " << (void*)_vector << endl;
+    }
 	SparseVector(unsigned int dimension, std::vector<VectorEntry> &entries);
 	SparseVector(const SparseVector & orig);
-	~SparseVector(){delete[] _vector;}
+	~SparseVector(){
+        cout << "~SparseVector() _vector = " << (void*)_vector << endl;
+        delete[] _vector;
+    }
 
 	void makeZero();
 	double get(size_t indexvalue) const; // -L
