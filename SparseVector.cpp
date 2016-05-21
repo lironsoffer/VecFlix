@@ -1,13 +1,12 @@
 #include "SparseVector.h"
 
-//SparseVector scale(const SparseVector& vector, double factor)
-//{
-//    SparseVector result = vector;
-//    result.scale(factor);
-//    return result;
-//}
-//
-//
+SparseVector scale(const SparseVector& vector, double factor)
+{
+    SparseVector result = vector;
+    result.scale(factor);
+    return result;
+}
+
 SparseVector add(const SparseVector& left, const SparseVector& right)
 {
     SparseVector result(left);
@@ -22,13 +21,23 @@ SparseVector subtract(const SparseVector& left, const SparseVector& right)
     return result;
 }
 
+SparseVector::SparseVector(unsigned int dimension=0) : _dimension(dimension),_vectorSize(0), _vector(0)
+{
+	if(DEBUG)
+	{
+		cout << "SparseVector(dimension) _vector = " << (void*)_vector << endl;
+	}
+}
 
 SparseVector::SparseVector(unsigned int dimension,
 		std::vector<VectorEntry> &entries) :
 				_dimension(dimension),_vectorSize(entries.size()),
 				_vector(new VectorEntry[entries.size()])
 {
-    cout << "SparseVector(dimension, entries) _vector = " << (void*)_vector << endl;
+	if (DEBUG)
+	{
+		cout << "SparseVector(dimension, entries) _vector = " << (void*)_vector << endl;
+	}
 	for(size_t i=0;i<_vectorSize;i++)
 	{
 		_vector[i]=entries[i];
@@ -37,10 +46,30 @@ SparseVector::SparseVector(unsigned int dimension,
 
 SparseVector::SparseVector(const SparseVector & orig)
 {
-    cout << "SparseVector(&orig) _vector = " << (void*)_vector << endl;
 	_dimension=orig._dimension;
 	_vectorSize=orig._vectorSize;
-	_vector=orig._vector;
+	_vector=new VectorEntry[orig._vectorSize];
+	for(size_t i=0;i<_vectorSize;i++)
+	{
+		_vector[i]=orig._vector[i];
+	}
+
+	if (DEBUG)
+	{
+		cout << "SparseVector(&orig) _vector = " << (void*)_vector << endl;
+	}
+
+//	*this=(orig);
+}
+
+SparseVector::~SparseVector()
+{
+	if (DEBUG)
+	{
+		cout << "~SparseVector() _vector = " << (void*)_vector << endl;
+	}
+	if (_vectorSize > 0)
+		delete[] _vector;
 }
 
 SparseVector& SparseVector::operator=(const SparseVector & orig)
@@ -50,10 +79,19 @@ SparseVector& SparseVector::operator=(const SparseVector & orig)
 		return *this;
 	}
 
-    cout << "SparseVector(&orig) op= _vector=" << (void*)_vector << " new _vector= " << orig._vector << endl;
+	if (DEBUG)
+	{
+		cout << "SparseVector(&orig) op= _vector=" << (void*)_vector << " new _vector= " << orig._vector << endl;
+	}
+
 	_dimension=orig._dimension;
 	_vectorSize=orig._vectorSize;
-	_vector=orig._vector;
+	delete[] _vector;
+	_vector=new VectorEntry[orig._vectorSize];
+	for(size_t i=0;i<_vectorSize;i++)
+		{
+			_vector[i]=orig._vector[i];
+		}
 
 	return *this;
 }
@@ -67,25 +105,23 @@ SparseVector& SparseVector::set(size_t index,double inValue)
 	}
 	else //  replace the old array and make a new array containing the new rating
 	{
-		VectorEntry *newVec;
-		if (index>_vectorSize)
-		//Make new array with new size
-		{
-			newVec=new VectorEntry[index+1];
-		}
-		// Make new array with old size+1
-		else
-		{
-			newVec=new VectorEntry[_vectorSize+1];
+		VectorEntry *newVec = new VectorEntry[_vectorSize+1];
+		//Make new array with old size+1
+		if (index>_dimension)
+		{ // Sets a new dimension if the index exceeds the old dimension
+			_dimension=index+1;
 		}
 
 		for(size_t j=0; j<_vectorSize; j++)
-		{
+		{ // Copy the old array
 			newVec[j]=_vector[j];
 		}
 		VectorEntry *newEntry = new VectorEntry(index,inValue);
 		newVec[_vectorSize++]=*newEntry;
-		//delete[] _vector;
+
+		delete[] _vector;
+		_vector=0;
+		_vector=new VectorEntry[_vectorSize];
 		_vector=newVec;
 	}
 	return *this;
@@ -93,18 +129,25 @@ SparseVector& SparseVector::set(size_t index,double inValue)
 
 void SparseVector::makeZero()
 {
-    cout << "SparseVector()::makeZero() _vector = " << (void*)_vector;
+	if (DEBUG)
+	{
+		cout << "SparseVector()::makeZero() _vector = " << (void*)_vector;
+	}
 	this->_vectorSize=0;
-	delete[] this->_vector; //TODO: Read again the chapter about delete
-	//this->_vector = new VectorEntry();
-    cout << " _vector=" << (void*)_vector << endl;
+	delete[] _vector;
+	_vector=0;
+
+	if (DEBUG)
+	{
+		cout << " _vector=" << (void*)_vector << endl;
+	}
 }
 
 double SparseVector::get(size_t indexvalue) const
 {
 	if (indexvalue>=_dimension) //TODO: Check if should be > or >=
 	{
-		std::cerr << "Index is larger than dimension" << std::endl;
+		std::cerr << "get: Index is larger than dimension" << std::endl;
 	}
 	for (unsigned int  i=0;i<_vectorSize;i++)
 	{
@@ -121,7 +164,7 @@ size_t SparseVector::getIndex(size_t indexvalue) const
 {
 	if (indexvalue>=_dimension) //TODO: Check if should be > or >=
 	{
-		std::cerr << "Index is larger than dimension" << std::endl;
+		std::cerr << "getIndex: Index is larger than dimension" << std::endl;
 	}
 	for (unsigned int  i=0;i<_vectorSize;i++)
 	{
@@ -162,7 +205,15 @@ void SparseVector::add(const SparseVector& vector)
 void SparseVector::subtract(const SparseVector& vector)
 {
 	for (size_t i=0;i<_dimension;i++)
-	{
-		this->set(i,this->get(i)-vector.get(i));
-	}
+		{
+			this->set(i,this->get(i)-vector.get(i));
+		}
+}
+
+void SparseVector::scale(double factor)
+{
+	for (size_t i=0;i<_dimension;i++)
+		{
+			this->set(i,factor*(this->get(i)));
+		}
 }

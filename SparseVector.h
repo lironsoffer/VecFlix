@@ -6,32 +6,27 @@
 #include <iostream>
 using namespace std;
 
+static bool DEBUG = 0;
+
 class SparseVector {
 public:
-	SparseVector(unsigned int dimension=0) : _dimension(dimension),_vectorSize(0), _vector(0){
-        cout << "SparseVector(dimension) _vector = " << (void*)_vector << endl;
-    }
+	SparseVector(unsigned int dimension);
 	SparseVector(unsigned int dimension, std::vector<VectorEntry> &entries);
 	SparseVector(const SparseVector & orig);
-	~SparseVector(){
-        cout << "~SparseVector() _vector = " << (void*)_vector << endl;
-        if (_vectorSize > 0)
-            delete[] _vector;
-    }
-
-	void makeZero();
-	double get(size_t indexvalue) const; // -L
-	void getNonZeros(std::vector<VectorEntry> &vector) const;// -L
-	void makeStandardBasis(size_t index); // -L
-	void add(const SparseVector& vector); //-L
-	void subtract(const SparseVector& vector);
-	unsigned int dimension () const { return (_dimension);}
-	//TODO: more constructors: assign -B
-	//TODO: Operators -B
-	//SparseVector operator + (unsigned int dim, unsigned int VectorSize, VectorEntry *vector);
-	//SparseVector operator = (unsigned int dim, unsigned int VectorSize, VectorEntry *vector);
+	~SparseVector();
 	SparseVector& operator=(const SparseVector &);
-	SparseVector& set(size_t,double); //-B
+
+	SparseVector& set(size_t,double);
+	double get(size_t indexvalue) const;
+	unsigned int dimension () const { return (_dimension);}
+
+	void getNonZeros(std::vector<VectorEntry> &vector) const;
+	void makeZero();
+	void makeStandardBasis(size_t index);
+	void add(const SparseVector& vector);
+	void subtract(const SparseVector& vector);
+	void scale(double factor);
+
 
 private:
 	unsigned int _dimension;
@@ -39,12 +34,10 @@ private:
 	VectorEntry *_vector;
 
 	size_t getIndex(size_t indexvalue) const;
-
-	//SparseVector():_dimension(0),_vectorSize(0),_vector(0){} //
 };
 
-//SparseVector scale(const SparseVector& vector, double factor); -B
-SparseVector add(const SparseVector& left, const SparseVector& right); // -L
-SparseVector subtract(const SparseVector& left, const SparseVector& right); //-L
+SparseVector scale(const SparseVector& vector, double factor);
+SparseVector add(const SparseVector& left, const SparseVector& right);
+SparseVector subtract(const SparseVector& left, const SparseVector& right);
 
 #endif //HW3_SPARSEVECTOR_H
