@@ -96,7 +96,7 @@ void SparseVector::makeZero()
     cout << "SparseVector()::makeZero() _vector = " << (void*)_vector;
 	this->_vectorSize=0;
 	delete[] this->_vector; //TODO: Read again the chapter about delete
-	this->_vector = new VectorEntry();
+	//this->_vector = new VectorEntry();
     cout << " _vector=" << (void*)_vector << endl;
 }
 
