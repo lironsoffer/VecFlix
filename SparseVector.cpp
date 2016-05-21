@@ -14,13 +14,13 @@ SparseVector add(const SparseVector& left, const SparseVector& right)
     result.add (right);
     return result;
 }
-//
-//SparseVector subtract(const SparseVector& left, const SparseVector& right)
-//{
-//    SparseVector result = left;
-//    result.subtract(right);
-//    return result;
-//}
+
+SparseVector subtract(const SparseVector& left, const SparseVector& right)
+{
+    SparseVector result = left;
+    result.subtract(right);
+    return result;
+}
 
 
 SparseVector::SparseVector(unsigned int dimension,
@@ -41,6 +41,19 @@ SparseVector::SparseVector(const SparseVector & orig)
 	_vector=orig._vector;
 }
 
+SparseVector& SparseVector::operator=(const SparseVector & orig)
+{
+	if (this==&orig)
+	{
+		return *this;
+	}
+	_dimension=orig._dimension;
+	_vectorSize=orig._vectorSize;
+	_vector=orig._vector;
+
+	return *this;
+}
+
 SparseVector& SparseVector::set(size_t index,double inValue)
 {
 
@@ -48,10 +61,10 @@ SparseVector& SparseVector::set(size_t index,double inValue)
 	{
 		_vector[(this->getIndex(index))].setValue(inValue);
 	}
-	else
+	else //  replace the old array and make a new array containing the new rating
 	{
 		VectorEntry *newVec;
-		if (index>_vectorSize) //  replace the old arry and make a new arry containing the new rating
+		if (index>_vectorSize)
 		//Make new array with new size
 		{
 			newVec=new VectorEntry[index+1];
@@ -68,7 +81,7 @@ SparseVector& SparseVector::set(size_t index,double inValue)
 		}
 		VectorEntry *newEntry = new VectorEntry(index,inValue);
 		newVec[_vectorSize++]=*newEntry;
-		delete[] _vector;
+		//delete[] _vector;
 		_vector=newVec;
 	}
 	return *this;
@@ -76,8 +89,9 @@ SparseVector& SparseVector::set(size_t index,double inValue)
 
 void SparseVector::makeZero()
 {
-	_vectorSize=0;
-	delete[] _vector; //TODO: Read again the chapter about delete
+	this->_vectorSize=0;
+	delete[] this->_vector; //TODO: Read again the chapter about delete
+	this->_vector = new VectorEntry();
 }
 
 double SparseVector::get(size_t indexvalue) const
@@ -93,7 +107,7 @@ double SparseVector::get(size_t indexvalue) const
 			return _vector[i].value();
 		}
 	}
-//if was unused + double use of i
+
 	return 0;
 }
 
@@ -135,7 +149,14 @@ void SparseVector::add(const SparseVector& vector)
 {
 	for (size_t i=0;i<_dimension;i++)
 	{
-		double tmp=this->get(i)+vector.get(i);
-		this->set(i,tmp);
+		this->set(i,this->get(i)+vector.get(i));
+	}
+}
+
+void SparseVector::subtract(const SparseVector& vector)
+{
+	for (size_t i=0;i<_dimension;i++)
+	{
+		this->set(i,this->get(i)-vector.get(i));
 	}
 }
