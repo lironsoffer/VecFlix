@@ -15,15 +15,15 @@ static void testSubtract();
 
 void runVectorTests()
 {
-//    testCreateAndPrint();
-//    testGetNonZeros();
-//    testMakeZero();
-//    testMakeStandardBasis();
-//    testSetValue();
-//    testCopyAndAssign();
-//    testAdd();
+    testCreateAndPrint();
+    testGetNonZeros();
+    testMakeZero();
+    testMakeStandardBasis();
+    testSetValue();
+    testCopyAndAssign();
+    testAdd();
 //    testScale();
-//    testSubtract();
+    testSubtract();
 }
 
 void testCreateAndPrint()
@@ -83,47 +83,47 @@ void testMakeStandardBasis()
     printVector(vector1);
     printVector(vector2);
 }
-//
-//void testSetValue()
-//{
-//    std::cout << "testSetValue" << std::endl;
-//    SparseVector vector(8);
-//    vector.set(5, -4).set(7, 3).set(2, 5).set(3, -5);
-//
-//    printVector(vector);
-//}
-//
-//void testCopyAndAssign()
-//{
-//    std::cout << "testCopyAndAssign" << std::endl;
-//
-//    SparseVector original(5);
-//    original.set(1, 2).set(4, -3);
-//    printVector(original);
-//
-//    SparseVector copy = original;
-//    printVector(copy);
-//
-//    SparseVector toBeAsigned(10);
-//    toBeAsigned.set(1, 3).set(6, -2).set(7, 4);
-//    toBeAsigned = original;
-//    printVector(toBeAsigned);
-//}
-//
-//void testAdd()
-//{
-//    std::cout << "testAdd" << std::endl;
-//
-//    SparseVector vector1(10);
-//    SparseVector vector2(10);
-//
-//    vector1.set(3, 5).set(6, 1).set(7, 3);
-//    vector2.set(3, -2).set(7, 4).set(8, 3);
-//
-//    printVector(vector1);
-//    printVector(vector2);
-//    printVector(add(vector1, vector2));
-//}
+
+void testSetValue()
+{
+    std::cout << "testSetValue" << std::endl;
+    SparseVector vector(8);
+    vector.set(5, -4).set(7, 3).set(2, 5).set(3, -5);
+
+    printVector(vector);
+}
+
+void testCopyAndAssign()
+{
+    std::cout << "testCopyAndAssign" << std::endl;
+
+    SparseVector original(5);
+    original.set(1, 2).set(4, -3);
+    printVector(original);
+
+    SparseVector copy = original;
+    printVector(copy);
+
+    SparseVector toBeAsigned(10);
+    toBeAsigned.set(1, 3).set(6, -2).set(7, 4);
+    toBeAsigned = original;
+    printVector(toBeAsigned);
+}
+
+void testAdd()
+{
+    std::cout << "testAdd" << std::endl;
+
+    SparseVector vector1(10);
+    SparseVector vector2(10);
+
+    vector1.set(3, 5).set(6, 1).set(7, 3);
+    vector2.set(3, -2).set(7, 4).set(8, 3);
+
+    printVector(vector1);
+    printVector(vector2);
+    printVector(add(vector1, vector2));
+}
 //
 //void testScale()
 //{
@@ -135,15 +135,15 @@ void testMakeStandardBasis()
 //    printVector(scale(vector, 4));
 //}
 //
-//void testSubtract()
-//{
-//    std::cout << "testSubtract" << std::endl;
-//
-//    SparseVector vector1 = SparseVector(9).set(0,2).set(4,-1).set(8,-3);
-//    SparseVector vector2 = SparseVector(9).set(1,2).set(4,5).set(7,1);
-//
-//    printVector(vector1);
-//    printVector(vector2);
-//    printVector(subtract(vector1, vector2));
-//}
+void testSubtract()
+{
+    std::cout << "testSubtract" << std::endl;
+
+    SparseVector vector1(SparseVector(9).set(0,2).set(4,-1).set(8,-3));
+    SparseVector vector2(SparseVector(9).set(1,2).set(4,5).set(7,1));
+
+    printVector(vector1);
+    printVector(vector2);
+    printVector(subtract(vector1, vector2));
+}
 
