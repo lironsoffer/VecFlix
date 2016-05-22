@@ -6,18 +6,20 @@
 #include <iostream>
 using namespace std;
 
+enum Action{ADD,SUBTRACT};
+
 static bool DEBUG = 0;
 
 class SparseVector {
 public:
-	SparseVector(unsigned int dimension);
+	explicit SparseVector(unsigned int dimension);
 	SparseVector(unsigned int dimension, std::vector<VectorEntry> &entries);
 	SparseVector(const SparseVector & orig);
 	~SparseVector();
 	SparseVector& operator=(const SparseVector &);
 
 	SparseVector& set(size_t,double);
-	double get(size_t indexvalue) const;
+	double get(const size_t requiredIndex) const;
 	unsigned int dimension () const { return (_dimension);}
 
 	void getNonZeros(std::vector<VectorEntry> &vector) const;
@@ -33,7 +35,8 @@ private:
 	unsigned int _vectorSize;
 	VectorEntry *_vector;
 
-	size_t getIndex(size_t indexvalue) const;
+	size_t getIndex(size_t requiredIndex) const;
+	void scanAndSet(const Action toDo, const SparseVector& vector);
 };
 
 SparseVector scale(const SparseVector& vector, double factor);
