@@ -22,7 +22,7 @@ void runVectorTests()
     testSetValue();
     testCopyAndAssign();
     testAdd();
-//    testScale();
+    testScale();
     testSubtract();
 }
 
@@ -124,17 +124,17 @@ void testAdd()
     printVector(vector2);
     printVector(add(vector1, vector2));
 }
-//
-//void testScale()
-//{
-//    std::cout << "testScale" << std::endl;
-//
-//    SparseVector vector(7);
-//    vector.set(0,-5).set(3, 3).set(6, 1);
-//
-//    printVector(scale(vector, 4));
-//}
-//
+
+void testScale()
+{
+    std::cout << "testScale" << std::endl;
+
+    SparseVector vector(7);
+    vector.set(0,-5).set(3, 3).set(6, 1);
+
+    printVector(scale(vector, 4));
+}
+
 void testSubtract()
 {
     std::cout << "testSubtract" << std::endl;

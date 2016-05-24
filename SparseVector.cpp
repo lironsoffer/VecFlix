@@ -1,5 +1,7 @@
 #include "SparseVector.h"
 
+static bool DEBUG = 0;
+
 SparseVector scale(const SparseVector& vector, double factor)
 {
     SparseVector result = vector;
@@ -29,7 +31,7 @@ void copyArray(VectorEntry* left, const VectorEntry* right,const size_t size)
 		}
 }
 
-SparseVector::SparseVector(unsigned int dimension=0) : _dimension(dimension)
+SparseVector::SparseVector(size_t dimension=0) : _dimension(dimension)
 ,_vectorSize(0), _vector(0)
 {
 	if(DEBUG)
@@ -38,7 +40,7 @@ SparseVector::SparseVector(unsigned int dimension=0) : _dimension(dimension)
 	}
 }
 
-SparseVector::SparseVector(unsigned int dimension,
+SparseVector::SparseVector(size_t dimension,
 		std::vector<VectorEntry> &entries) :
 				_dimension(dimension),_vectorSize(entries.size()),
 				_vector(new VectorEntry[entries.size()])
@@ -48,14 +50,16 @@ SparseVector::SparseVector(unsigned int dimension,
 		cout << "SparseVector(dimension, entries) _vector = " << (void*)_vector
 				<< endl;
 	}
-//	if (_dimension<_vectorSize)
-//	{
-//		std::cerr << "Error: vector<VectorEntry> is larger than dimension" << std::endl;
-//	}
-
+	if (_dimension<_vectorSize)
+	{
+		std::cerr << "vector<VectorEntry> is larger than dimension" << std::endl;
+	}
 	for(size_t i=0;i<_vectorSize;i++)
 	{
-		_vector[i]=entries[i]; //No use of copyArray since entries is vector<> type, not array
+		if (isValidIndex(entries[i].index())) //Copies only objects with index smaller than dimension
+		{
+			_vector[i]=entries[i]; //No use of copyArray since entries is vector<> type, not array
+		}
 	}
 }
 
@@ -64,12 +68,8 @@ SparseVector::SparseVector(const SparseVector & orig)
 	_dimension=orig._dimension;
 	_vectorSize=orig._vectorSize;
 	_vector=new VectorEntry[orig._vectorSize];
-//	for(size_t i=0;i<_vectorSize;i++)
-//	{
-//		_vector[i]=orig._vector[i];
-//	}
-	copyArray(_vector,orig._vector,_vectorSize);
 
+	copyArray(_vector,orig._vector,_vectorSize);
 
 	if (DEBUG)
 	{
@@ -86,8 +86,6 @@ SparseVector::~SparseVector()
 	if (_vectorSize > 0)
 	{
 		delete[] _vector;
-	}
-	{
 	}
 }
 
@@ -108,10 +106,7 @@ SparseVector& SparseVector::operator=(const SparseVector & orig)
 	_vectorSize=orig._vectorSize;
 	delete[] _vector;
 	_vector=new VectorEntry[orig._vectorSize];
-//	for(size_t i=0;i<_vectorSize;i++)
-//		{
-//			_vector[i]=orig._vector[i];
-//		}
+
 	copyArray(_vector,orig._vector,_vectorSize);
 
 	return *this;
@@ -119,9 +114,8 @@ SparseVector& SparseVector::operator=(const SparseVector & orig)
 
 SparseVector& SparseVector::set(size_t index,double inValue)
 {
-
-	if((index<_vectorSize)&&(this->get(index)!=0))
-		//if the rating isn't 0 change it
+//	if((index<_vectorSize)&&(this->get(index)!=0)) //TODO: check
+	if((isValidIndex(index))&&((this->getIndex(index)!=_dimension))) // Check if the Entry exists is in the array
 	{
 		_vector[(this->getIndex(index))].setValue(inValue);
 	}
@@ -133,11 +127,6 @@ SparseVector& SparseVector::set(size_t index,double inValue)
 		{ // Sets a new dimension if the index exceeds the old dimension
 			_dimension=index+1;
 		}
-
-//		for(size_t j=0; j<_vectorSize; j++)
-//		{ // Copy the old array
-//			newVec[j]=_vector[j];
-//		}
 		copyArray(newVec,_vector,_vectorSize); // Copy the old array
 
 		VectorEntry *newEntry = new VectorEntry(index,inValue);
@@ -169,20 +158,8 @@ void SparseVector::makeZero()
 
 double SparseVector::get(size_t requiredIndex) const
 {
-//	if (requiredIndex>=_dimension) //TODO: Check if should be > or >=
-//	{
-//		std::cerr << "get: Index is larger than dimension" << std::endl;
-//	}
-//	for (unsigned int  i=0;i<_vectorSize;i++)
-//	{
-//		if(_vector[i].index()==requiredIndex)
-//		{
-//			return _vector[i].value();
-//		}
-//	}
-
 	size_t index=this->getIndex(requiredIndex);
-	if (index<_vectorSize)
+	if (this->isValidIndex(index))
 	{
 		return _vector[index].value();
 	}
@@ -191,18 +168,22 @@ double SparseVector::get(size_t requiredIndex) const
 
 size_t SparseVector::getIndex(size_t requiredIndex) const
 {
-	if (requiredIndex>=_dimension)
+	if (!(this->isValidIndex(requiredIndex)))
 	{
 		std::cerr << "Index is larger than dimension" << std::endl;
 	}
-	for (unsigned int  i=0;i<_vectorSize;i++)
+	else
 	{
-		if(_vector[i].index()==requiredIndex)
+		for (unsigned int  i=0;i<_vectorSize;i++)
 		{
-			return i;
+			if(_vector[i].index()==requiredIndex)
+			{
+				return i;
+			}
 		}
 	}
-	return _vectorSize;
+
+	return _dimension;
 }
 
 void SparseVector::getNonZeros(std::vector<VectorEntry> &vector) const
@@ -223,45 +204,39 @@ void SparseVector::makeStandardBasis(size_t index)
 	this->set(index,1);
 }
 
-void SparseVector::scanAndSet(const Action toDo, const SparseVector& vector)
+void SparseVector::scanAndSet(const SparseVector& vector, const double scale=1)
 {
 	for (size_t i=0;i<_dimension;i++)
 	{
-		switch (toDo)
-		{
-		case ADD:
-			this->set(i,this->get(i)+vector.get(i));
-			break;
-		case SUBTRACT:
-			this->set(i,this->get(i)-vector.get(i));
-			break;
-		}
+		double tmp=get(i)+(scale*vector.get(i));
+		this->set(i,tmp);
 	}
 }
 
 void SparseVector::add(const SparseVector& vector)
 {
-//	for (size_t i=0;i<_dimension;i++)
-//	{
-//		this->set(i,this->get(i)+vector.get(i));
-//	}
-	this->scanAndSet(ADD,vector);
+	this->scanAndSet(vector);
 }
 
 void SparseVector::subtract(const SparseVector& vector)
 {
-//	for (size_t i=0;i<_dimension;i++)
-//		{
-//			this->set(i,this->get(i)-vector.get(i));
-//		}
-
-	this->scanAndSet(SUBTRACT,vector);
+	this->scanAndSet(vector,-1);
 }
 
 void SparseVector::scale(double factor)
 {
-	for (size_t i=0;i<_dimension;i++)
-		{
-			this->set(i,factor*(this->get(i)));
-		}
+	if (factor==0)
+	{
+		this->makeZero();
+	}
+	else
+	{
+		this->scanAndSet(*this,(factor-1));
+	}
+
+}
+
+bool SparseVector::isValidIndex(const size_t index) const
+{
+	return ((index<_dimension)?true:false);
 }

@@ -6,14 +6,10 @@
 #include <iostream>
 using namespace std;
 
-enum Action{ADD,SUBTRACT};
-
-static bool DEBUG = 0;
-
 class SparseVector {
 public:
-	explicit SparseVector(unsigned int dimension);
-	SparseVector(unsigned int dimension, std::vector<VectorEntry> &entries);
+	explicit SparseVector(size_t dimension);
+	SparseVector(size_t dimension, std::vector<VectorEntry> &entries);
 	SparseVector(const SparseVector & orig);
 	~SparseVector();
 	SparseVector& operator=(const SparseVector &);
@@ -36,7 +32,8 @@ private:
 	VectorEntry *_vector;
 
 	size_t getIndex(size_t requiredIndex) const;
-	void scanAndSet(const Action toDo, const SparseVector& vector);
+	void scanAndSet(const SparseVector& vector, const double scale);
+	bool isValidIndex(const size_t index) const;
 };
 
 SparseVector scale(const SparseVector& vector, double factor);
