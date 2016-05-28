@@ -174,7 +174,7 @@ size_t SparseVector::getIndex(size_t requiredIndex) const
 	}
 	else
 	{
-		for (unsigned int  i=0;i<_vectorSize;i++)
+		for (size_t i=0;i<_vectorSize;i++)
 		{
 			if(_vector[i].index()==requiredIndex)
 			{

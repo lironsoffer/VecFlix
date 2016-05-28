@@ -20,7 +20,7 @@ public:
 	virtual ~VectorEntry(){}
 	double value () const {return (_value); }
 	void setValue (const double value) { _value=value; }
-	unsigned int  index() const { return (_index); }
+	size_t  index() const { return (_index); }
 
 private:
 size_t _index;

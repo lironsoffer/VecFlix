@@ -16,7 +16,7 @@ public:
 
 	SparseVector& set(size_t,double);
 	double get(const size_t requiredIndex) const;
-	unsigned int dimension () const { return (_dimension);}
+	size_t dimension () const { return (_dimension);}
 
 	void getNonZeros(std::vector<VectorEntry> &vector) const;
 	void makeZero();
@@ -27,8 +27,8 @@ public:
 
 
 private:
-	unsigned int _dimension;
-	unsigned int _vectorSize;
+	size_t _dimension;
+	size_t _vectorSize;
 	VectorEntry *_vector;
 
 	size_t getIndex(size_t requiredIndex) const;
