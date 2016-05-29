@@ -1,8 +1,12 @@
 /*
  * VectorEntry.h
  *
- *  Created on: May 7, 2016
- *      Author: Ben
+ * This module represents an object in a sparse-vector,
+ * holding an index and a value.
+ * It includes the following:
+ * value - getter
+ * index - getter
+ * setIndex - setter
  */
 
 #ifndef VECTORENTRY_H_
@@ -12,15 +16,38 @@
 
 class VectorEntry {
 public:
-
-	VectorEntry(): _index(0), _value(0){} // TODO: location needs to be verify ---- Problem to build an empty array
-	VectorEntry(size_t index, double value): _index(index) , _value(value){}//defalut by index
-	VectorEntry(size_t index): _index(index) , _value(0){}// default by index
+/*
+ * Constructor: VectorEntry () -  Constructor by default value
+ */
+	VectorEntry(): _index(0), _value(0){}
+/*
+ * Constructor: VectorEntry (size_t index, double value) -
+ * Constructor that creates an Entry with a given index and a given value
+ *
+ *@param index - index to set
+ *@param value - value to set
+ *
+ */
+	VectorEntry(size_t index, double value=0): _index(index) , _value(value){}
+/*
+ * Constructor: VectorEntry (const VectorEntry & orig) - Copy Constructor
+ *
+ * @param orig - the Vector Entry to copy
+ */
 	VectorEntry(const VectorEntry & orig) : _index(orig.index()) , _value(orig.value()){}
-	virtual ~VectorEntry(){}
-	double value () const {return (_value); }
-	void setValue (const double value) { _value=value; }
-	size_t  index() const { return (_index); }
+	~VectorEntry(){}
+	double value () const
+	{
+		return (_value);
+	}
+	void setValue (const double value)
+	{
+		_value=value;
+	}
+	size_t  index() const
+	{
+		return (_index);
+	}
 
 private:
 size_t _index;

@@ -139,11 +139,10 @@ void testSubtract()
 {
     std::cout << "testSubtract" << std::endl;
 
-    SparseVector vector1(SparseVector(9).set(0,2).set(4,-1).set(8,-3));
-    SparseVector vector2(SparseVector(9).set(1,2).set(4,5).set(7,1));
+    SparseVector vector1 = SparseVector(9).set(0,2).set(4,-1).set(8,-3);
+    SparseVector vector2 = SparseVector(9).set(1,2).set(4,5).set(7,1);
 
     printVector(vector1);
     printVector(vector2);
     printVector(subtract(vector1, vector2));
 }
-
